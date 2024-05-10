@@ -1,7 +1,6 @@
 import { Collection } from 'discord.js';
 import { Explorer, File, Folder } from '@natchy/utils';
 import { Base, type IBase } from './Base';
-import type { CallbackParams } from '../types';
 
 /**
  * The base manager options.
@@ -180,23 +179,6 @@ export abstract class BaseManager<B extends Base, I extends IBase> {
 
     i.disable();
     return i;
-  }
-
-  /**
-   * Call an item.
-   * @param item The item to call.
-   * @param params The parameters for the callback.
-   * @example
-   * await manager.call('ping', { client });
-   * await manager.call(ping, { client });
-   * @throws { Error } Item not found.
-   * @throws { Error } Item not enabled.
-   * @throws { Error } Item execute not found.
-   */
-  async call(item: B | string, params: CallbackParams<Record<string, never>>) {
-    const i = typeof item === 'string' ? this.cache.get(item) : item;
-    if (!i) throw new Error('Item not found');
-    return i.call(params);
   }
 
   /**

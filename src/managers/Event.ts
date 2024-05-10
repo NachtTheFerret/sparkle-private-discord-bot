@@ -1,16 +1,16 @@
 import type { ClientEvents } from 'discord.js';
-import { Base, type IBase } from './Base';
 import { client } from '../client';
+import { BaseExecutable, type IBaseExecutable } from './BaseExecutable';
 
 type EventKey = keyof ClientEvents;
 type EventParams<E extends EventKey> = ClientEvents[E];
 
-export interface IEvent<E extends EventKey> extends IBase<{ event: E; args: EventParams<E> }> {
+export interface IEvent<E extends EventKey> extends IBaseExecutable<{ event: E; args: EventParams<E> }> {
   emitOnReady?: boolean | null;
   lastEmittedAt?: number | null;
 }
 
-export class Event<E extends EventKey> extends Base<{ event: E; args: EventParams<E> }> implements IEvent<E> {
+export class Event<E extends EventKey> extends BaseExecutable<{ event: E; args: EventParams<E> }> implements IEvent<E> {
   emitOnReady: boolean | null;
   lastEmittedAt: number | null;
 

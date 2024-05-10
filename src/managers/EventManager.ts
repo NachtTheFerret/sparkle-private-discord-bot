@@ -1,11 +1,12 @@
 import type { ClientEvents } from 'discord.js';
-import { BaseManager, BaseManagerLoadOptions } from './BaseManager';
+import type { BaseManagerLoadOptions } from './BaseManager';
 import { IEvent, Event } from './Event';
+import { BaseExecutableManager } from './BaseExecutableManager';
 
 type EventKey = keyof ClientEvents;
 type EventParams<E extends EventKey> = ClientEvents[E];
 
-export class EventManager extends BaseManager<Event<EventKey>, IEvent<EventKey>> {
+export class EventManager extends BaseExecutableManager<Event<EventKey>, IEvent<EventKey>> {
   async emit(event: string | Event<EventKey>, ...args: EventParams<EventKey> | []) {
     const e = typeof event === 'string' ? this.cache.get(event) : event;
     if (!e) throw new Error('Event not found');
