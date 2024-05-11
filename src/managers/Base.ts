@@ -27,7 +27,7 @@ export interface IBase {
  * The base
  * @template P Parameters type
  */
-export class Base implements IBase {
+export class Base<I extends IBase> implements IBase {
   name: string;
   description: string | null;
   tags: string[] | null;
@@ -46,7 +46,7 @@ export class Base implements IBase {
    * Creates a new builder
    * @param data Create a builder from data
    */
-  constructor(data?: IBase) {
+  constructor(data?: I) {
     this.name = data?.name || '';
     this.description = data?.description || null;
     this.tags = data?.tags || null;
@@ -81,7 +81,7 @@ export class Base implements IBase {
     if (file.type !== 'file') throw new Error('Not a file');
     if (file.extension !== 'js' && file.extension !== 'ts') throw new Error('Not a JavaScript or TypeScript file');
 
-    const item = (await Explorer.import(file.path, prop)) as IBase | Base;
+    const item = (await Explorer.import(file.path, prop)) as I | Base<I>;
     if (!item) throw new Error('Item not found in file');
 
     item.path = file.path;
@@ -162,7 +162,7 @@ export class Base implements IBase {
   }
 
   // other things
-  get data(): IBase {
+  get data(): I {
     return JSON.parse(JSON.stringify(this));
   }
 }

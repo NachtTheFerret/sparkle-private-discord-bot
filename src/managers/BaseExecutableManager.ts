@@ -23,7 +23,7 @@ export interface BaseExecutableManagerOptions extends BaseManagerOptions {
  * The base executable manager.
  * @template B Base executable type.
  */
-export abstract class BaseExecutableManager<B extends BaseExecutable, I extends IBaseExecutable> extends BaseManager<
+export abstract class BaseExecutableManager<B extends BaseExecutable<I>, I extends IBaseExecutable> extends BaseManager<
   B,
   I
 > {
@@ -36,7 +36,7 @@ export abstract class BaseExecutableManager<B extends BaseExecutable, I extends 
    * @param item
    * @returns
    */
-  override from(item: IBaseExecutable | BaseExecutable) {
+  override from(item: I | B) {
     return (item instanceof BaseExecutable ? item : new BaseExecutable(item)) as B;
   }
 

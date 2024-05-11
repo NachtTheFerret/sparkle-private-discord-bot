@@ -46,7 +46,7 @@ export interface BaseManagerLoadOptions {
  * The base manager.
  * @template B Base type.
  */
-export abstract class BaseManager<B extends Base, I extends IBase> {
+export abstract class BaseManager<B extends Base<I>, I extends IBase> {
   cache = new Collection<string, B>();
 
   constructor(protected options: BaseManagerOptions = {}) {}
@@ -98,7 +98,7 @@ export abstract class BaseManager<B extends Base, I extends IBase> {
    * @param item
    * @returns
    */
-  from(item: IBase | Base) {
+  from(item: I | B) {
     return (item instanceof Base ? item : new Base(item)) as B;
   }
 

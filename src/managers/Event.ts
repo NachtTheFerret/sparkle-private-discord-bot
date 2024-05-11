@@ -10,7 +10,10 @@ export interface IEvent<E extends EventKey> extends IBaseExecutable<{ event: E; 
   lastEmittedAt?: number | null;
 }
 
-export class Event<E extends EventKey> extends BaseExecutable<{ event: E; args: EventParams<E> }> implements IEvent<E> {
+export class Event<E extends EventKey>
+  extends BaseExecutable<IEvent<E>, { event: E; args: EventParams<E> }>
+  implements IEvent<E>
+{
   emitOnReady: boolean | null;
   lastEmittedAt: number | null;
 

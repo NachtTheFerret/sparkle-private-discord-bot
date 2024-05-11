@@ -22,7 +22,7 @@ export interface IBaseExecutable<P = any> extends IBase {
  * The base executable
  * @template P Parameters type
  */
-export class BaseExecutable<P = any> extends Base implements IBaseExecutable<P> {
+export class BaseExecutable<I extends IBaseExecutable<P>, P = any> extends Base<I> implements IBaseExecutable<P> {
   before: Callback<P> | null;
   execute: Callback<P> | null;
   after: Callback<P> | null;
@@ -35,7 +35,7 @@ export class BaseExecutable<P = any> extends Base implements IBaseExecutable<P> 
    * Creates a new builder
    * @param data Create a builder from data
    */
-  constructor(data?: IBaseExecutable<P>) {
+  constructor(data?: I) {
     super(data);
 
     this.before = data?.before || null;
